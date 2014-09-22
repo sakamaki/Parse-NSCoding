@@ -37,6 +37,7 @@
 	//[self allKeys] returns only the @dynamic properties that are not nil
 	for (NSString* key in [self allKeys]) {
 		id value = self[key];
+        if ([value isKindOfClass:[PFRelation class]]) continue;
 		[encoder encodeObject:value forKey:key];
 	}
 	
@@ -71,6 +72,7 @@
 		//Deserialize all non-nil Parse properties
 		for (NSString* key in allKeys) {
             id obj = [aDecoder decodeObjectForKey:key];
+            if (!obj) continue;
 			self[key] = obj;
 		}
 		
